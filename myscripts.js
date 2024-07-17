@@ -41,5 +41,13 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
+function playGame() {
+    for (let i = 0; i < 5; i++) {
+        playRound();
+    }
+    console.log("Your Score: "+humanScore+"\n"+"Computer Score: "+computerScore);
+    humanScore == computerScore ? console.log(" It's a tie!!") : humanScore > computerScore ? console.log("you win!!") : console.log("you lose!!");
+};
 
+playGame()
 

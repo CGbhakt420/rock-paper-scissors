@@ -1,53 +1,70 @@
-function getComputerChoice(){
-    let choice = ["rock","paper","scissors"];
-    let index = Math.floor(Math.random() * 3);
-    return choice[index];
-}
+// Constants
+const choices = ["rock", "paper", "scissors"];
+const winningScore = 5;
 
-function getHumanChoice(){
-    let move = prompt("Enter the move: ")
-    move = move.toLowerCase();
-    return move;
-}
-
+// Variables
 let humanScore = 0;
 let computerScore = 0;
 
-function playRound(humanChoice, computerChoice) {
-    humanChoice = getHumanChoice();
-    computerChoice = getComputerChoice();
+// DOM Elements
+const buttons = document.querySelectorAll('button[id^=""]');
+const resultsDiv = document.getElementById('results');
+const humanScoreDiv = document.getElementById('humanScore');
+const computerScoreDiv = document.getElementById('computerScore');
+const gameResultDiv = document.getElementById('gameResult');
 
-    if (humanChoice == "rock" || humanChoice == "paper" || humanChoice == "scissors") {
+// Function to get computer's choice
+function getComputerChoice() {
+    const index = Math.floor(Math.random() * 3);
+    return choices[index];
+}
 
-        if (humanChoice === computerChoice) {
-            console.log("It's a tie! Go again");
-            playRound();
-        } else if (humanChoice === "rock" && computerChoice === "paper") {
-            console.log("You lose "+computerChoice+" beats "+humanChoice);
-            computerScore++;
-        } else if (humanChoice === "paper" && computerChoice === "scissors") {
-            console.log("You lose "+computerChoice+" beats "+humanChoice);
-            computerScore++;
-        } else if (humanChoice === "scissors" && computerChoice === "rock") {
-            console.log("You lose "+computerChoice+" beats "+humanChoice);
-            computerScore++;
-        }else {
-            console.log("You win "+humanChoice+" beats "+computerChoice);
-            humanScore++;
+// Function to play a round
+function playRound(playerChoice) {
+    const computerChoice = getComputerChoice();
+
+    if (!choices.includes(playerChoice)) {
+        resultsDiv.textContent = "Invalid choice. Please select again.";
+        return;
+    }
+
+    resultsDiv.textContent = `You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+
+    if (playerChoice === computerChoice) {
+        resultsDiv.textContent += " It's a tie!";
+    } else if (
+        (playerChoice === "rock" && computerChoice === "scissors") ||
+        (playerChoice === "paper" && computerChoice === "rock") ||
+        (playerChoice === "scissors" && computerChoice === "paper")
+    ) {
+        resultsDiv.textContent += ` You win! ${playerChoice} beats ${computerChoice}.`;
+        humanScore++;
+    } else {
+        resultsDiv.textContent += ` Computer wins! ${computerChoice} beats ${playerChoice}.`;
+        computerScore++;
+    }
+
+    // Update scores in DOM
+    humanScoreDiv.textContent = `Your Score: ${humanScore}`;
+    computerScoreDiv.textContent = `Computer Score: ${computerScore}`;
+
+    // Check if game is over
+    if (humanScore === winningScore || computerScore === winningScore) {
+        if (humanScore > computerScore) {
+            gameResultDiv.textContent = "Congratulations! You win the game!";
+        } else {
+            gameResultDiv.textContent = "Computer wins the game. Better luck next time!";
         }
-    }else {
-        console.log("Bad Inputs");
-        playRound();
+        // Disable buttons to end the game
+        buttons.forEach(button => button.removeEventListener('click', handleClick));
     }
 }
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        playRound();
-    }
-    console.log("Your Score: "+humanScore+"\n"+"Computer Score: "+computerScore);
-    humanScore == computerScore ? console.log(" It's a tie!!") : humanScore > computerScore ? console.log("you win!!") : console.log("you lose!!");
-};
+// Event listener function for button clicks
+function handleClick(event) {
+    const playerChoice = event.target.id;
+    playRound(playerChoice);
+}
 
-playGame()
-
+// Add event listeners to buttons
+buttons.forEach(button => button.addEventListener('click', handleClick));

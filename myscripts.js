@@ -1,16 +1,13 @@
-
 const choices = ["rock", "paper", "scissors"];
 const winningScore = 5
 let humanScore = 0;
 let computerScore = 0;
 
-
-const buttons = document.querySelectorAll('button[id^=""]');
+const buttons = document.querySelectorAll('button');
 const resultsDiv = document.getElementById('results');
 const humanScoreDiv = document.getElementById('humanScore');
 const computerScoreDiv = document.getElementById('computerScore');
 const gameResultDiv = document.getElementById('gameResult');
-
 
 function getComputerChoice() {
     const index = Math.floor(Math.random() * 3);
@@ -47,9 +44,9 @@ function playRound(playerChoice) {
 
     if (humanScore === winningScore || computerScore === winningScore) {
         if (humanScore > computerScore) {
-            gameResultDiv.textContent = "Congratulations! You win the game!";
+            gameResultDiv.textContent = "Congratulations! You win the game! Refresh to play again";
         } else {
-            gameResultDiv.textContent = "Computer wins the game. Better luck next time!";
+            gameResultDiv.textContent = "Computer wins the game. Better luck next time! Refresh to play again";
         }
         buttons.forEach(button => button.removeEventListener('click', handleClick));
     }

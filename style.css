@@ -1,3 +1,49 @@
-.reset{
-    display: none;
+body{
+    background-color: darkgoldenrod;
+}
+
+#game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#choices{
+    display: flex;
+    padding: 50px;
+    justify-content: space-around;
+    gap: 8px;
+}
+
+button{
+    font-size: 40px;
+    padding: 20px;
+    border-color: coral;
+    border-width: 8px;
+    color: coral;
+    background-color: darkred;
+    font-weight: 700;
+
+}
+
+#results,
+#gameResult{
+    padding: 20px;
+    font-size: 30px;
+    color: darkred;
+    font-weight: 900;
+}
+
+#humanScore{
+    margin-top: 20px;
+}
+
+#computerScore{
+    margin-bottom: 40px;
+}
+
+.score{
+    font-size: 20px;
+    color: darkred;
+    font-weight: 700;
 }
